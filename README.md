@@ -116,9 +116,19 @@ Initialize the client. API key falls back to `FUNDZWATCH_API_KEY` env var.
 | `get_watchlist_events(days, types)` | Events for tracked companies |
 | `get_usage()` | API usage and limits |
 
+## Tutorials
+
+- [Build an AI SDR Agent with CrewAI + FundzWatch](https://github.com/Fund-z/fundzwatch-python/blob/main/tutorials/build-ai-sdr-crewai.md) -- Score leads and automate outreach in 15 minutes
+- [Real-Time Funding Alerts with LangChain + FundzWatch](https://github.com/Fund-z/fundzwatch-python/blob/main/tutorials/langchain-funding-alerts.md) -- Monitor funding rounds and get Slack alerts
+- [Turn Claude into Your Business Intelligence Analyst with MCP](https://github.com/Fund-z/fundzwatch-python/blob/main/tutorials/mcp-claude-business-intelligence.md) -- Use natural language to query business events
+
 ## Get a Free API Key
 
 Sign up at [fundzwatch.ai/onboarding](https://fundzwatch.ai/onboarding) -- no credit card required.
+
+## Documentation
+
+Full API docs, SDK reference, and interactive playground at [fundzwatch.ai/docs](https://fundzwatch.ai/docs).
 
 ## License
 
