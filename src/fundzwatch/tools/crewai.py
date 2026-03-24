@@ -30,6 +30,7 @@ from fundzwatch.client import FundzWatch
 class ScoredLeadsInput(BaseModel):
     min_score: int = Field(default=0, description="Minimum buyer intent score (0-100)")
     max_results: int = Field(default=25, description="Max leads to return (1-50)")
+    buying_stages: Optional[str] = Field(default=None, description="Comma-separated stages: Active Evaluation, Decision, Research, Awareness")
     industries: Optional[str] = Field(default=None, description="Comma-separated industries")
 
 
@@ -60,12 +61,14 @@ class GetScoredLeadsTool(BaseTool):
     class Config:
         arbitrary_types_allowed = True
 
-    def _run(self, min_score: int = 0, max_results: int = 25, industries: Optional[str] = None) -> str:
+    def _run(self, min_score: int = 0, max_results: int = 25, buying_stages: Optional[str] = None, industries: Optional[str] = None) -> str:
         try:
             industry_list = [i.strip() for i in industries.split(",")] if industries else None
+            stage_list = [s.strip() for s in buying_stages.split(",")] if buying_stages else None
             data = self.fw_client.get_leads(
                 min_score=min_score,
                 max_results=max_results,
+                buying_stages=stage_list,
                 industries=industry_list,
             )
             leads = data.get("signals", [])

@@ -1,10 +1,12 @@
 """Custom exceptions for FundzWatch SDK."""
 
+from typing import Optional
+
 
 class FundzWatchError(Exception):
     """Base exception for all FundzWatch errors."""
 
-    def __init__(self, message: str, status_code: int = None, error_code: str = None):
+    def __init__(self, message: str, status_code: Optional[int] = None, error_code: Optional[str] = None):
         self.message = message
         self.status_code = status_code
         self.error_code = error_code

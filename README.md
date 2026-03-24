@@ -1,5 +1,9 @@
 # FundzWatch Python SDK
 
+[![PyPI version](https://img.shields.io/pypi/v/fundzwatch.svg)](https://pypi.org/project/fundzwatch/)
+[![Python](https://img.shields.io/pypi/pyversions/fundzwatch.svg)](https://pypi.org/project/fundzwatch/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
 Real-time business event intelligence for AI agents and sales teams.
 
 ```bash

@@ -5,6 +5,7 @@ from typing import Any, Dict, List, Optional
 
 import httpx
 
+from fundzwatch import __version__
 from fundzwatch.exceptions import (
     APIError,
     AuthenticationError,
@@ -43,7 +44,7 @@ class FundzWatch:
             headers={
                 "Authorization": f"Bearer {self.api_key}",
                 "Content-Type": "application/json",
-                "User-Agent": "fundzwatch-python/1.0.0",
+                "User-Agent": f"fundzwatch-python/{__version__}",
             },
             timeout=timeout,
             transport=httpx.HTTPTransport(retries=2),
@@ -65,7 +66,7 @@ class FundzWatch:
                 status_code=429,
             )
         if response.status_code == 400:
-            data = response.json()
+            data = response.json() if response.headers.get("content-type", "").startswith("application/json") else {}
             raise ValidationError(data.get("message", "Bad request"), status_code=400)
         if response.status_code >= 400:
             data = response.json() if response.headers.get("content-type", "").startswith("application/json") else {}

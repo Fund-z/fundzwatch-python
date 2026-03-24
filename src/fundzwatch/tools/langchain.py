@@ -30,6 +30,7 @@ from fundzwatch.client import FundzWatch
 class ScoredLeadsInput(BaseModel):
     min_score: int = Field(default=0, description="Minimum buyer intent score (0-100)")
     max_results: int = Field(default=25, description="Max leads to return (1-50)")
+    buying_stages: Optional[str] = Field(default=None, description="Comma-separated stages: Active Evaluation, Decision, Research, Awareness")
     industries: Optional[str] = Field(default=None, description="Comma-separated industries")
 
 
@@ -37,6 +38,8 @@ class EventsInput(BaseModel):
     types: Optional[str] = Field(default=None, description="Event types: funding, acquisition, hiring, contract, product_launch")
     days: int = Field(default=7, description="Look back days (1-90)")
     limit: int = Field(default=50, description="Max events (1-200)")
+    industries: Optional[str] = Field(default=None, description="Comma-separated industries")
+    locations: Optional[str] = Field(default=None, description="Comma-separated locations")
 
 
 class WatchlistInput(BaseModel):
@@ -58,10 +61,11 @@ class FundzWatchScoredLeads(BaseTool):
     class Config:
         arbitrary_types_allowed = True
 
-    def _run(self, min_score: int = 0, max_results: int = 25, industries: Optional[str] = None) -> str:
+    def _run(self, min_score: int = 0, max_results: int = 25, buying_stages: Optional[str] = None, industries: Optional[str] = None) -> str:
         try:
             industry_list = [i.strip() for i in industries.split(",")] if industries else None
-            data = self.fw_client.get_leads(min_score=min_score, max_results=max_results, industries=industry_list)
+            stage_list = [s.strip() for s in buying_stages.split(",")] if buying_stages else None
+            data = self.fw_client.get_leads(min_score=min_score, max_results=max_results, buying_stages=stage_list, industries=industry_list)
             leads = data.get("signals", [])
             if not leads:
                 return "No scored leads found."
@@ -88,9 +92,9 @@ class FundzWatchEvents(BaseTool):
     class Config:
         arbitrary_types_allowed = True
 
-    def _run(self, types: Optional[str] = None, days: int = 7, limit: int = 50) -> str:
+    def _run(self, types: Optional[str] = None, days: int = 7, limit: int = 50, industries: Optional[str] = None, locations: Optional[str] = None) -> str:
         try:
-            data = self.fw_client.get_events(types=types, days=days, limit=limit)
+            data = self.fw_client.get_events(types=types, days=days, limit=limit, industries=industries, locations=locations)
             events = data.get("events", [])
             if not events:
                 return "No events found."
