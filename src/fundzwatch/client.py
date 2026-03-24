@@ -19,11 +19,11 @@ class FundzWatch:
 
     Args:
         api_key: Your FundzWatch API key. Falls back to FUNDZWATCH_API_KEY env var.
-        base_url: API base URL. Defaults to https://api.fundz.net/api/v1/watch.
+        base_url: API base URL. Defaults to https://api.fundz.net/v1/watch.
         timeout: Request timeout in seconds. Default: 30.
     """
 
-    DEFAULT_BASE_URL = "https://api.fundz.net/api/v1/watch"
+    DEFAULT_BASE_URL = "https://api.fundz.net/v1/watch"
 
     def __init__(
         self,
